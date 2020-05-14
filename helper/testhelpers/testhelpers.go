@@ -568,11 +568,12 @@ func VerifyRaftConfiguration(core *vault.TestClusterCore, numCores int) error {
 func DebugCores(t testing.T, cluster *vault.TestCluster) {
 	for i, core := range cluster.Cores {
 		sealed := core.Core.Sealed()
+		standby, _ := core.Core.Standby()
 		isLeader, _, _, err := core.Core.Leader()
 		if err != nil {
 			t.Fatal(err)
 		}
-		fmt.Printf(">>> debug core %d: sealed %t, leader %t\n", i, sealed, isLeader)
+		fmt.Printf(">>> debug core %d: sealed %t, standby %t, leader %t\n", i, sealed, standby, isLeader)
 	}
 }
 
