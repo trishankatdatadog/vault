@@ -565,29 +565,29 @@ func VerifyRaftConfiguration(core *vault.TestClusterCore, numCores int) error {
 	return nil
 }
 
-func DebugCores(t testing.T, cluster *vault.TestCluster) {
-	for i, core := range cluster.Cores {
-		sealed := core.Core.Sealed()
-		standby, _ := core.Core.Standby()
-		isLeader, _, _, err := core.Core.Leader()
-		if err != nil {
-			t.Fatal(err)
-		}
-		fmt.Printf(">>> debug core %d: sealed %t, standby %t, leader %t\n", i, sealed, standby, isLeader)
-	}
-}
-
-func DebugRaftConfiguration(t testing.T, core *vault.TestClusterCore) {
-
-	backend := core.UnderlyingRawStorage.(*raft.RaftBackend)
-	ctx := namespace.RootContext(context.Background())
-	config, err := backend.GetConfiguration(ctx)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	servers := config.Servers
-	for i, s := range servers {
-		fmt.Printf(">>> debug raft %d %q %t\n", i, s.NodeID, s.Leader)
-	}
-}
+//func DebugCores(t testing.T, cluster *vault.TestCluster) {
+//	for i, core := range cluster.Cores {
+//		sealed := core.Core.Sealed()
+//		standby, _ := core.Core.Standby()
+//		isLeader, _, _, err := core.Core.Leader()
+//		if err != nil {
+//			t.Fatal(err)
+//		}
+//		fmt.Printf(">>> debug core %d: sealed %t, standby %t, leader %t\n", i, sealed, standby, isLeader)
+//	}
+//}
+//
+//func DebugRaftConfiguration(t testing.T, core *vault.TestClusterCore) {
+//
+//	backend := core.UnderlyingRawStorage.(*raft.RaftBackend)
+//	ctx := namespace.RootContext(context.Background())
+//	config, err := backend.GetConfiguration(ctx)
+//	if err != nil {
+//		t.Fatal(err)
+//	}
+//
+//	servers := config.Servers
+//	for i, s := range servers {
+//		fmt.Printf(">>> debug raft %d %q %t\n", i, s.NodeID, s.Leader)
+//	}
+//}
