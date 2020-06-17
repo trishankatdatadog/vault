@@ -486,25 +486,6 @@ func JoinRaftFollowers(t testing.T, cluster *vault.TestCluster, useStoredKeys bo
 	WaitForNCoresUnsealed(t, cluster, len(cluster.Cores))
 }
 
-func awaitUnsealWithStoredKeys(t testing.T, core *vault.TestClusterCore) {
-
-	timeout := time.Now().Add(30 * time.Second)
-	for {
-		if time.Now().After(timeout) {
-			t.Fatal("raft join: timeout waiting for core to unseal")
-		}
-		// Its actually ok for an error to happen here the first couple of
-		// times -- it means the raft join hasn't gotten around to initializing
-		// the backend yet.
-		err := core.UnsealWithStoredKeys(context.Background())
-		if err == nil {
-			return
-		}
-		core.Logger().Warn("raft join: failed to unseal core", "error", err)
-		time.Sleep(time.Second)
-	}
-}
-
 // HardcodedServerAddressProvider is a ServerAddressProvider that uses
 // a hardcoded map of raft node addresses.
 //
